@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+
+    <title>Volta Charging</title>    
+    <!-- Latest compiled and minified CSS -->
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.5.6/angular-mocks.js"></script>
+    <script src="https://code.angularjs.org/1.5.9/angular-animate.js"></script>
+    <script src="https://code.angularjs.org/1.5.9/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.js"></script>
+    
+
+   <script src="js/main.js"></script>
+
+    
+    
+    
+ </head>
+
+   <body ng-app="myApp">
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">VOLTA charging stations</a>
+        </div>
+       
+      </div>
+    </nav>
+       <div class="container" ng-controller="mainCtrl">
+       
+<div class="row">
+  
+  <div class="col-sm-4">
+   
+       
+   </div >
+   <div class="col-sm-offset-4 col-sm-4"> 
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search by Station or City or State" ng-model="search" >
+       <span class="input-group-btn">
+        <button class="btn btn-info" type="button">Go!</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+                     
+
+       <br/><br/>
+        <table class="table table-striped table-hover table-bordered">
+         <caption>List of charging stations across US</caption>
+          <thead>
+            <tr>
+              <th ng-click="sort('name')">Station &nbsp;<span class="glyphicon" ng-show="sortKey=='name'" ng-class="{'glyphicon-triangle-bottom':reverse,'glyphicon-triangle-top':!reverse}"></span></th>
+                <th ng-click="sort('street_address')">Address &nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='street_address'" ng-class="{'glyphicon-triangle-bottom':reverse,'glyphicon-triangle-top':!reverse}"></span></th>
+              <th ng-click="sort('status')">Status&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-triangle-bottom':reverse,'glyphicon-triangle-top':!reverse}"></span></th>
+              <th ng-click="sort('level')">Level&nbsp;<span class="glyphicon sort-icon" ng-show="sortKey=='level'" ng-class="{'glyphicon-triangle-bottom':reverse,'glyphicon-triangle-top':!reverse}"></span></th>
+                            
+              
+            </tr>
+          </thead>
+          <tbody>
+        
+           <tr ng-repeat="data in station.slice(((currentPage-1)*stationPerPage), ((currentPage)*stationPerPage)) | searchField: 'name': 'city' | filter: search | orderBy : sortKey:reverse" 
+             ng-class="{'active':data.status=='active'}">
+              <td> {{data.name}}</td>
+              <td>{{data.street_address}},{{data.city}}, {{data.state}},{{data.zip_code}}</td>        
+              <td>{{data.status}}</td>               
+              <td>{{data.meters[0].level}}</td>
+             
+              
+            </tr>
+          </tbody>
+        </table>
+        
+     
+        <ul uib-pagination pagination total-items="stationResultSize" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" items-per-page="stationPerPage"></ul> 
+       </div>
+        
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+  
+    
+  </body>
+</html>
